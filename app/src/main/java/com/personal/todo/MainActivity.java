@@ -6,7 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.personal.todo.adapter.ToDoAdapter;
 import com.personal.todo.model.ToDoModel;
 import com.personal.todo.utils.DatabaseHandler;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private ToDoAdapter tasksAdapter;
     private List<ToDoModel> taskList;
     private DatabaseHandler db;
+    private FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,21 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         tasksRecyclerView = findViewById(R.id.tasksRecyclerView);
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        tasksAdapter = new ToDoAdapter(this);
+        tasksAdapter = new ToDoAdapter(db,this);
         tasksRecyclerView.setAdapter(tasksAdapter);
+
+        fab = findViewById(R.id.fab);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
         tasksAdapter.setTasks(taskList);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(), AddNewTask.TAG);
+            }
+        });
     }
 
     @Override

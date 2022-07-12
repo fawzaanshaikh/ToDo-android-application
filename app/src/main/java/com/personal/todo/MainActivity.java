@@ -38,6 +38,10 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         tasksRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         tasksAdapter = new ToDoAdapter(this);
         tasksRecyclerView.setAdapter(tasksAdapter);
+
+        taskList = db.getAllTasks();
+        Collections.reverse(taskList);
+        tasksAdapter.setTasks(taskList);
     }
 
     @Override

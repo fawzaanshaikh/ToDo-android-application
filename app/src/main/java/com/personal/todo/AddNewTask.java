@@ -108,7 +108,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
         Activity activity = getActivity();
 
         if (activity instanceof DialogCloseListener) {
-            
+            ((DialogCloseListener)activity).handleDialogClose(dialog);
         }
     }
 }
